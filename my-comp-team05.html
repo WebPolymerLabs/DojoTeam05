@@ -16,6 +16,8 @@ An element providing a solution to no problem in particular.
 Example:
 
     <my-comp-team05></my-comp-team05>
+    
+    <input is='my-comp-team0'
 
 Example:
 
@@ -50,6 +52,7 @@ Example:
       <img src$="{{author.image}}">
       Cheers,<br/>
       <span class="name">{{author.name}}</span>
+      <paper-button class$="my-button {{_cptButtonClass(fancy, 2, '')}}" on-tap="_buttonClicked"></paper-button>
     </p>
   </template>
 
@@ -88,6 +91,13 @@ Example:
             };
           }
         },
+      },
+      
+      _cptButtonClass: function () {
+      },
+      
+      _buttonClicked: function() {
+        this.$$('.my-button').name = 'dfsdfsadf';
       },
 
       // Element Lifecycle
