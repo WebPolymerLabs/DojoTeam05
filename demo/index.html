@@ -9,26 +9,33 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>my-comp-team05 Demo</title>
-    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link rel="import" href="../my-comp-team05.html">
-  </head>
-  <body unresolved>
 
-    <p>An example of <code>&lt;my-comp-team05&gt;</code>:</p>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>my-comp-team05 Demo</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="../my-comp-team05.html">
+</head>
+<style>
+  .wrapper {
+    width: 70%;
+    margin: 0 auto;
+  }
+</style>
 
-    <p>Make words! <button id="saybtn">Say Something</button></p>
-    <p>Make lasers! <button id="laserbtn">Fire lasers</button></p>
+<body unresolved>
 
+  <div class="wrapper">
     <my-comp-team05 author='{"name": "Lord Meowser", "image": "http://lorempixel.com/g/300/200/cats/"}' fancy>
       <h2>Hello my-comp-team05</h2>
     </my-comp-team05>
+  </div>
 
-    <script>
-      var seedElement = document.querySelector('my-comp-team05');
+
+
+  <script>
+    var seedElement = document.querySelector('my-comp-team05');
 
       document.querySelector('#saybtn').addEventListener('click', function() {
         alert(seedElement.sayHello('Hallo!'));
@@ -41,8 +48,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.addEventListener("my-comp-team05-lasers", function(e) {
         console.log(e.detail.sound);
       });
+  </script>
 
-    </script>
+</body>
 
-  </body>
 </html>
