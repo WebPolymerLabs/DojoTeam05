@@ -12,6 +12,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../iron-icons/maps-icons.html">
 <link rel="import" href="../iron-icons/social-icons.html">
+<link rel="import" href="../iron-icons/av-icons.html">
+<link rel="import" href="../iron-icons/hardware-icons.html">
+<link rel="import" href="../iron-icons/communication-icons.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../paper-material/paper-material.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -71,29 +79,35 @@ Example:
       .card-header .title-text.over-image {
         position: absolute;
         bottom: 0px;
+        right: 0;
+        left: 0;
+        @apply(--layout-vertical);
       }
 
       .card-header .sub-header {
         font-size: 14px;
         @apply(--layout-horizontal);
+        @apply(--layout-start);
       }
 
       .card-header .sub-header div{
-        @apply(--layout-flex);
-        @apply(--layout-start);
-        align-items: center;
+        align-items: center; 
       }
       
       .sub-header-people {
         @apply(--layout-horizontal); 
       }
       
+      .sub-header-place {
+        @apply(--layout-horizontal); 
+      }
+      
       .card-header .sub-header .divider{
         height: 20px;
         background-color: white;
-        width: 1px;
-        padding-left: 2px;
-        padding-right: : 2px;
+        width: 2px;
+        margin-right: 5px;
+        margin-left: 5px;
       }
 
       paper-card {
@@ -105,6 +119,17 @@ Example:
        
         
       }
+      .card-content iron-icon{
+        margin-right: 10px;
+      }
+      .scheduled-container{
+        position: absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right: 0;
+        background-color: white;
+      }
     </style>
 
     <paper-card>
@@ -115,22 +140,33 @@ Example:
           <div class="sub-header">
             <div class="sub-header-people">15<iron-icon icon="social:people"></iron-icon></div>
             <div class="divider"></div>
-            <div><iron-icon icon="maps:place"></iron-icon></div>
+            <div class="sub-header-place">
+              <iron-icon icon="maps:place"></iron-icon>
+              <span>23B - 1 Andar</span>
+            </div>
             <div></div>
           </div>
         </div>
         
       </div>
-      <div class="card-content">1,000 miles of wonder</div>
+      <div class="card-content">
+        <iron-icon id="phone" icon="communication:phone"></iron-icon>
+        <iron-icon id="videocam" icon="av:videocam"></iron-icon>
+        <iron-icon id="tv" icon="hardware:tv"></iron-icon>
+        <iron-icon id="cast" icon="hardware:cast"></iron-icon>
+        
+        <!-- paper-icon-buttons have an inherent padding that will push the tooltip down. offset undoes it -->
+        <paper-tooltip for="phone" offset="0">Telefone </paper-tooltip>
+        <paper-tooltip for="videocam" offset="0">Projetor</paper-tooltip>
+        <paper-tooltip for="tv" offset="0">TV</paper-tooltip>
+        <paper-tooltip for="cast" offset="0">Chrome Cast</paper-tooltip>
+      </div>
+      
       <div class="card-actions">
-        <paper-button>Share</paper-button>
-        <paper-button>Explore</paper-button>
-        <paper-icon-button icon="hardware:keyboard-arrow-up" title="more info" onclick="_toggle()" style="float:right;">
+        <paper-button>RESERVE NOW</paper-button>
+        <paper-icon-button icon="event" title="more info" onclick="_toggle()" style="float:right;">
         </paper-icon-button>
-        <iron-collapse id="more-info" style="width:100%;">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla
-          facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
-        </iron-collapse>
+        
         <script>
           function _toggle() {
             var moreInfo = document.getElementById('more-info');
@@ -141,6 +177,7 @@ Example:
           }
         </script>
       </div>
+      <paper-material elevation="1" class="scheduled-container"></paper-material>
     </paper-card>
   </template>
 
@@ -205,7 +242,7 @@ Example:
         //
         // This is a good place to perform any work related to your element's
         // visual state or active behavior (measuring sizes, beginning animations,
-        // loading resources, etc).
+        // loading iconrces, etc).
       },
 
       detached: function() {

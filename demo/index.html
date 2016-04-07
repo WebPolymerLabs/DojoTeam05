@@ -36,18 +36,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     var seedElement = document.querySelector('my-comp-team05');
-
-      document.querySelector('#saybtn').addEventListener('click', function() {
-        alert(seedElement.sayHello('Hallo!'));
-      });
-
-      document.querySelector('#laserbtn').addEventListener('click', function() {
-        seedElement.fireLasers();
-      });
-
-      document.addEventListener("my-comp-team05-lasers", function(e) {
-        console.log(e.detail.sound);
-      });
   </script>
 
 </body>
