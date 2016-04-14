@@ -20,6 +20,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../iron-list/iron-list.html">
+<link rel="import" href="../paper-item/paper-icon-item.html">
+<link rel="import" href="../paper-item/paper-item-body.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -56,7 +59,8 @@ Example:
         max-height: 100px;
         max-width: 100px;
       }
-      .card-header{
+      
+      .card-header {
         position: relative;
         border-top-left-radius: inherit;
         border-top-right-radius: inherit;
@@ -68,14 +72,15 @@ Example:
         width: 100%;
         --iron-image-width: 100%;
         pointer-events: none;
-
       }
+      
       .card-header .title-text {
         color: white;
         padding: 16px;
         font-size: 24px;
         font-weight: 400;
       }
+      
       .card-header .title-text.over-image {
         position: absolute;
         bottom: 0px;
@@ -83,52 +88,65 @@ Example:
         left: 0;
         @apply(--layout-vertical);
       }
-
+      
       .card-header .sub-header {
         font-size: 14px;
         @apply(--layout-horizontal);
         @apply(--layout-start);
       }
-
-      .card-header .sub-header div{
-        align-items: center; 
+      
+      .card-header .sub-header div {
+        align-items: center;
       }
       
       .sub-header-people {
-        @apply(--layout-horizontal); 
+        @apply(--layout-horizontal);
       }
       
       .sub-header-place {
-        @apply(--layout-horizontal); 
+        @apply(--layout-horizontal);
       }
       
-      .card-header .sub-header .divider{
+      .card-header .sub-header .divider {
         height: 20px;
         background-color: white;
         width: 2px;
         margin-right: 5px;
         margin-left: 5px;
       }
-
+      
       paper-card {
+        overflow: hidden;
         --paper-card-header-color: white;
         --paper-card-header-text: {
           color: white;
-         
-        };
-       
-        
+        }
+        ;
       }
-      .card-content iron-icon{
+      
+      .card-content iron-icon {
         margin-right: 10px;
       }
-      .scheduled-container{
+      
+      .scheduled-container {
+        transform: translateY(100%);
         position: absolute;
-        top:0;
-        bottom:0;
-        left:0;
+        top: 0;
+        bottom: 0;
+        left: 0;
         right: 0;
         background-color: white;
+      }
+      
+      .scheduled-container-active {
+        transform: none;
+      }
+      
+      .scheduled-container.animated {
+        transition: transform 1s ease 0s;
+      }
+      .schedule-list{
+        position: relative;
       }
     </style>
 
@@ -138,7 +156,9 @@ Example:
         <div class="title-text over-image">
           <div>Teste</div>
           <div class="sub-header">
-            <div class="sub-header-people">15<iron-icon icon="social:people"></iron-icon></div>
+            <div class="sub-header-people">15
+              <iron-icon icon="social:people"></iron-icon>
+            </div>
             <div class="divider"></div>
             <div class="sub-header-place">
               <iron-icon icon="maps:place"></iron-icon>
@@ -147,37 +167,48 @@ Example:
             <div></div>
           </div>
         </div>
-        
+
       </div>
       <div class="card-content">
         <iron-icon id="phone" icon="communication:phone"></iron-icon>
         <iron-icon id="videocam" icon="av:videocam"></iron-icon>
         <iron-icon id="tv" icon="hardware:tv"></iron-icon>
         <iron-icon id="cast" icon="hardware:cast"></iron-icon>
-        
+
         <!-- paper-icon-buttons have an inherent padding that will push the tooltip down. offset undoes it -->
         <paper-tooltip for="phone" offset="0">Telefone </paper-tooltip>
         <paper-tooltip for="videocam" offset="0">Projetor</paper-tooltip>
         <paper-tooltip for="tv" offset="0">TV</paper-tooltip>
         <paper-tooltip for="cast" offset="0">Chrome Cast</paper-tooltip>
       </div>
-      
+
       <div class="card-actions">
         <paper-button>RESERVE NOW</paper-button>
-        <paper-icon-button icon="event" title="more info" onclick="_toggle()" style="float:right;">
+        <paper-icon-button icon="event" title="more info" on-tap="_openCalendar" style="float:right;">
         </paper-icon-button>
-        
-        <script>
-          function _toggle() {
-            var moreInfo = document.getElementById('more-info');
-            var iconButton = Polymer.dom(event).localTarget;
-            iconButton.icon = moreInfo.opened ? 'hardware:keyboard-arrow-up'
-                                              : 'hardware:keyboard-arrow-down';
-            moreInfo.toggle();
-          }
-        </script>
+
       </div>
-      <paper-material elevation="1" class="scheduled-container"></paper-material>
+
+      <paper-material id="schedulePainel" elevation="1" class="scheduled-container animated">
+        <div style="background-color: red;">
+          <paper-icon-button id="closeButton" icon="close" on-tap="_closeCalendar"></paper-icon-button>
+          <div style="background-color: blue;"> Teste </div>
+        </div>
+        <div class="schedule-list">
+          <iron-list items="[[data]]" as="item">
+            <template>
+              <paper-icon-item>
+                <iron-icon icon="communication:phone" item-icon>
+                </iron-icon>
+                <paper-item-body two-line>
+                  <div>(650) 555-1234</div>
+                  <div secondary>Mobile</div>
+                </paper-item-body>
+              </paper-icon-item>
+            </template>
+          </iron-list>
+        </div>
+      </paper-material>
     </paper-card>
   </template>
 
@@ -191,6 +222,19 @@ Example:
          * while checking its pocket watch.
          */
         fancy: Boolean,
+        
+        data: {
+          type: Array,
+          value: [
+            {
+              name: 'Evento 1'
+            },{
+              name: 'Evento 2'
+            },{
+              name: 'Evento 3'
+            },
+          ]
+        },
 
         /**
          * Describes the author of the element, but is really just an excuse to
@@ -217,7 +261,16 @@ Example:
           }
         },
       },
-      
+       _openCalendar: function(){
+          var popCalendar = this.$.schedulePainel;
+          popCalendar.classList.add('scheduled-container-active');
+       },
+       
+       _closeCalendar: function(){
+          var dismisCalendar = this.$.schedulePainel;
+          dismisCalendar.classList.remove('scheduled-container-active');
+       },
+       
       _cptButtonClass: function () {
       },
       
