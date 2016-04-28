@@ -36,6 +36,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     var seedElement = document.querySelector('my-comp-team05');
+    seedElement.card = {
+        name: "Pink Cerebro",
+        maxCapacity: "1",
+        location: "23A - 1 andar",
+        resource: [
+          "television",
+          "projector",
+          "telephone" 
+        ],
+        img: "https://elements.polymer-project.org/bower_components/paper-card/demo/trip.png"
+    };
+    
+    seedElement.events = [
+      {
+        name: "Churras do Vi",
+        userImg: "http://lorempixel.com/32/32/"
+      },{
+        name: "Evento 2222",
+        userImg: "http://lorempixel.com/32/32/"
+      },{
+        name: "Evento 3",
+        userImg: "http://lorempixel.com/32/32/"
+      }
+    ];
   </script>
 
 </body>

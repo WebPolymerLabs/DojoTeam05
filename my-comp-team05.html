@@ -148,21 +148,26 @@ Example:
       .schedule-list{
         position: relative;
       }
+      .round-image{
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+      }
     </style>
 
     <paper-card>
       <div class="card-header">
-        <iron-image src="https://elements.polymer-project.org/bower_components/paper-card/demo/trip.png"> </iron-image>
+      <iron-image src="[[card.img]]"> </iron-image>
         <div class="title-text over-image">
-          <div>Teste</div>
+          <div>[[card.name]]</div>
           <div class="sub-header">
-            <div class="sub-header-people">15
+            <div class="sub-header-people">[[card.maxCapacity]]
               <iron-icon icon="social:people"></iron-icon>
             </div>
             <div class="divider"></div>
             <div class="sub-header-place">
               <iron-icon icon="maps:place"></iron-icon>
-              <span>23B - 1 Andar</span>
+              <span>[[card.location]]</span>
             </div>
             <div></div>
           </div>
@@ -170,46 +175,59 @@ Example:
 
       </div>
       <div class="card-content">
-        <iron-icon id="phone" icon="communication:phone"></iron-icon>
-        <iron-icon id="videocam" icon="av:videocam"></iron-icon>
-        <iron-icon id="tv" icon="hardware:tv"></iron-icon>
-        <iron-icon id="cast" icon="hardware:cast"></iron-icon>
+        <template is="dom-if" if="[[_hasResource('telephone', card)]]">
+          <iron-icon id="phone" icon="communication:phone"></iron-icon>
+          <paper-tooltip for="phone" offset="0">Telefone </paper-tooltip>
+        </template>
+        <template is="dom-if" if="[[_hasResource('projector', card)]]">
+          <iron-icon id="videocam" icon="av:videocam"></iron-icon>
+          <paper-tooltip for="videocam" offset="0">Projetor</paper-tooltip>
+        </template>
+        <template is="dom-if" if="[[_hasResource('television', card)]]">
+          <iron-icon id="tv" icon="hardware:tv"></iron-icon>
+          <paper-tooltip for="tv" offset="0">TV</paper-tooltip>
+        </template>
+        <template is="dom-if" if="[[_hasResource('chromecast', card)]]">
+          <iron-icon id="cast" icon="hardware:cast"></iron-icon>
+          <paper-tooltip for="cast" offset="0">Chrome Cast</paper-tooltip>
+        </template>
+
 
         <!-- paper-icon-buttons have an inherent padding that will push the tooltip down. offset undoes it -->
-        <paper-tooltip for="phone" offset="0">Telefone </paper-tooltip>
-        <paper-tooltip for="videocam" offset="0">Projetor</paper-tooltip>
-        <paper-tooltip for="tv" offset="0">TV</paper-tooltip>
-        <paper-tooltip for="cast" offset="0">Chrome Cast</paper-tooltip>
+        
       </div>
 
       <div class="card-actions">
         <paper-button>RESERVE NOW</paper-button>
-        <paper-icon-button icon="event" title="more info" on-tap="_openCalendar" style="float:right;">
+        <paper-icon-button icon="event" title="more info" on-tap="_openCalendar" style="float:right;" hidden="[[!events.length]]">
         </paper-icon-button>
 
       </div>
 
-      <paper-material id="schedulePainel" elevation="1" class="scheduled-container animated">
-        <div style="background-color: red;">
+      <paper-material id="schedulePainel" elevation="1" class="scheduled-container animated" >
+        <div style="display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 16px">
+         <div> Eventos </div>
           <paper-icon-button id="closeButton" icon="close" on-tap="_closeCalendar"></paper-icon-button>
-          <div style="background-color: blue;"> Teste </div>
         </div>
         <div class="schedule-list">
-          <iron-list items="[[data]]" as="item">
+          <iron-list items="[[events]]" as="item">
             <template>
               <paper-icon-item>
-                <iron-icon icon="communication:phone" item-icon>
-                </iron-icon>
+                <img src="[[item.userImg]]" class="round-image" item-icon/>
                 <paper-item-body two-line>
-                  <div>(650) 555-1234</div>
+                  <div>[[item.name]]</div>
                   <div secondary>Mobile</div>
                 </paper-item-body>
               </paper-icon-item>
             </template>
-          </iron-list>
-        </div>
-      </paper-material>
-    </paper-card>
+  </iron-list>
+  </div>
+  </paper-material>
+  </paper-card>
   </template>
 
   <script>
@@ -223,17 +241,12 @@ Example:
          */
         fancy: Boolean,
         
-        data: {
-          type: Array,
-          value: [
-            {
-              name: 'Evento 1'
-            },{
-              name: 'Evento 2'
-            },{
-              name: 'Evento 3'
-            },
-          ]
+        events: {
+          type: Array
+        },
+        
+        card: {
+          type: Object
         },
 
         /**
@@ -333,6 +346,13 @@ Example:
        */
       fireLasers: function() {
         this.fire('my-comp-team05-lasers', {sound: 'Pew pew!'});
+      },
+      
+      _hasResource: function(resourceName){
+        if(this.card && this.card.resource){
+          return this.card.resource.indexOf(resourceName)!== -1;  
+        }
+        return false;
       }
     });
   </script>
