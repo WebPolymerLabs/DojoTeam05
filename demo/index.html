@@ -17,22 +17,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
   <link rel="import" href="../my-comp-team05.html">
 </head>
-<style>
+<style is="custom-style">
   .wrapper {
     width: 70%;
     margin: 0 auto;
   }
+  
+  my-comp-team05 {
+    --my-comp-team05-resource-icon-color: red;
+    --my-comp-team05-resource-icon: {
+      width: 60px;
+      height: 60px;
+    }; 
+  }
+  
 </style>
 
 <body unresolved>
 
   <div class="wrapper">
-    <my-comp-team05 author='{"name": "Lord Meowser", "image": "http://lorempixel.com/g/300/200/cats/"}' fancy>
+    <my-comp-team05>
       <h2>Hello my-comp-team05</h2>
     </my-comp-team05>
   </div>
-
-
 
   <script>
     var seedElement = document.querySelector('my-comp-team05');

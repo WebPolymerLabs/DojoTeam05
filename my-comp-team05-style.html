@@ -1,0 +1,114 @@
+<dom-module id="my-comp-team05-style">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+        font-family: 'Roboto';
+      }
+      
+      .card-header {
+        position: relative;
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
+        overflow: hidden;
+      }
+      
+      .card-header iron-image {
+        display: block;
+        width: 100%;
+        --iron-image-width: 100%;
+        pointer-events: none;
+      }
+      
+      .card-header .title-text {
+        color: white;
+        padding: 16px;
+        font-size: 24px;
+        font-weight: 400;
+      }
+      
+      .card-header .title-text.over-image {
+        position: absolute;
+        bottom: 0px;
+        right: 0;
+        left: 0;
+        @apply(--layout-vertical);
+      }
+      
+      .card-header .sub-header {
+        font-size: 14px;
+        @apply(--layout-horizontal);
+        @apply(--layout-start);
+      }
+      
+      .card-header .sub-header div {
+        align-items: center;
+      }
+      
+      .sub-header-people {
+        @apply(--layout-horizontal);
+      }
+      
+      .sub-header-place {
+        @apply(--layout-horizontal);
+      }
+      
+      .card-header .sub-header .divider {
+        height: 20px;
+        background-color: white;
+        width: 2px;
+        margin-right: 5px;
+        margin-left: 5px;
+      }
+      
+      paper-card {
+        overflow: hidden;
+        --paper-card-header-color: white;
+        --paper-card-header-text: {
+          color: white;
+        };
+      }
+
+      .card-content {
+        @apply(--layout-horizontal);
+      }
+            
+      .card-content .resource-icon {
+        display: inline;
+        margin-right: 10px;
+      }
+
+      .card-content .resource-icon iron-icon {
+        --iron-icon-fill-color: var(--my-comp-team05-resource-icon-color, #000);
+        @apply(--my-comp-team05-resource-icon);
+      }
+      
+      .scheduled-container {
+        transform: translateY(100%);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+      }
+      
+      .scheduled-container-active {
+        transform: none;
+      }
+      
+      :host:not([no-animate]) .scheduled-container {
+        transition: transform 1s ease 0s;
+      }
+      .schedule-list{
+        position: relative;
+      }
+      .round-image{
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+      }
+    </style>
+  </template>
+</dom-module>
