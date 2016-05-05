@@ -1,0 +1,359 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../iron-icons/maps-icons.html">
+<link rel="import" href="../iron-icons/social-icons.html">
+<link rel="import" href="../iron-icons/av-icons.html">
+<link rel="import" href="../iron-icons/hardware-icons.html">
+<link rel="import" href="../iron-icons/communication-icons.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../iron-list/iron-list.html">
+<link rel="import" href="../paper-item/paper-icon-item.html">
+<link rel="import" href="../paper-item/paper-item-body.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <my-comp-team05></my-comp-team05>
+    
+    <input is='my-comp-team0'
+
+Example:
+
+    <my-comp-team05>
+      <h2>Hello my-comp-team05</h2>
+    </my-comp-team05>
+
+@demo demo/index.html
+@hero hero.svg
+-->
+
+<dom-module id="my-comp-team05">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+        font-family: 'Roboto';
+      }
+      
+      .author img {
+        display: block;
+        float: left;
+        margin-right: 5px;
+        max-height: 100px;
+        max-width: 100px;
+      }
+      
+      .card-header {
+        position: relative;
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
+        overflow: hidden;
+      }
+      
+      .card-header iron-image {
+        display: block;
+        width: 100%;
+        --iron-image-width: 100%;
+        pointer-events: none;
+      }
+      
+      .card-header .title-text {
+        color: white;
+        padding: 16px;
+        font-size: 24px;
+        font-weight: 400;
+      }
+      
+      .card-header .title-text.over-image {
+        position: absolute;
+        bottom: 0px;
+        right: 0;
+        left: 0;
+        @apply(--layout-vertical);
+      }
+      
+      .card-header .sub-header {
+        font-size: 14px;
+        @apply(--layout-horizontal);
+        @apply(--layout-start);
+      }
+      
+      .card-header .sub-header div {
+        align-items: center;
+      }
+      
+      .sub-header-people {
+        @apply(--layout-horizontal);
+      }
+      
+      .sub-header-place {
+        @apply(--layout-horizontal);
+      }
+      
+      .card-header .sub-header .divider {
+        height: 20px;
+        background-color: white;
+        width: 2px;
+        margin-right: 5px;
+        margin-left: 5px;
+      }
+      
+      paper-card {
+        overflow: hidden;
+        --paper-card-header-color: white;
+        --paper-card-header-text: {
+          color: white;
+        }
+        ;
+      }
+      
+      .card-content iron-icon {
+        margin-right: 10px;
+      }
+      
+      .scheduled-container {
+        transform: translateY(100%);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+      }
+      
+      .scheduled-container-active {
+        transform: none;
+      }
+      
+      .scheduled-container.animated {
+        transition: transform 1s ease 0s;
+      }
+      .schedule-list{
+        position: relative;
+      }
+      .round-image{
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+      }
+    </style>
+
+    <paper-card>
+      <div class="card-header">
+      <iron-image src="[[card.img]]"> </iron-image>
+        <div class="title-text over-image">
+          <div>[[card.name]]</div>
+          <div class="sub-header">
+            <div class="sub-header-people">[[card.maxCapacity]]
+              <iron-icon icon="social:people"></iron-icon>
+            </div>
+            <div class="divider"></div>
+            <div class="sub-header-place">
+              <iron-icon icon="maps:place"></iron-icon>
+              <span>[[card.location]]</span>
+            </div>
+            <div></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-content">
+        <template is="dom-if" if="[[_hasResource('telephone', card)]]">
+          <iron-icon id="phone" icon="communication:phone"></iron-icon>
+          <paper-tooltip for="phone" offset="0">Telefone </paper-tooltip>
+        </template>
+        <template is="dom-if" if="[[_hasResource('projector', card)]]">
+          <iron-icon id="videocam" icon="av:videocam"></iron-icon>
+          <paper-tooltip for="videocam" offset="0">Projetor</paper-tooltip>
+        </template>
+        <template is="dom-if" if="[[_hasResource('television', card)]]">
+          <iron-icon id="tv" icon="hardware:tv"></iron-icon>
+          <paper-tooltip for="tv" offset="0">TV</paper-tooltip>
+        </template>
+        <template is="dom-if" if="[[_hasResource('chromecast', card)]]">
+          <iron-icon id="cast" icon="hardware:cast"></iron-icon>
+          <paper-tooltip for="cast" offset="0">Chrome Cast</paper-tooltip>
+        </template>
+
+
+        <!-- paper-icon-buttons have an inherent padding that will push the tooltip down. offset undoes it -->
+        
+      </div>
+
+      <div class="card-actions">
+        <paper-button>RESERVE NOW</paper-button>
+        <paper-icon-button icon="event" title="more info" on-tap="_openCalendar" style="float:right;" hidden="[[!events.length]]">
+        </paper-icon-button>
+
+      </div>
+
+      <paper-material id="schedulePainel" elevation="1" class="scheduled-container animated" >
+        <div style="display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 16px">
+         <div> Eventos </div>
+          <paper-icon-button id="closeButton" icon="close" on-tap="_closeCalendar"></paper-icon-button>
+        </div>
+        <div class="schedule-list">
+          <iron-list items="[[events]]" as="item">
+            <template>
+              <paper-icon-item>
+                <img src="[[item.userImg]]" class="round-image" item-icon/>
+                <paper-item-body two-line>
+                  <div>[[item.name]]</div>
+                  <div secondary>Mobile</div>
+                </paper-item-body>
+              </paper-icon-item>
+            </template>
+  </iron-list>
+  </div>
+  </paper-material>
+  </paper-card>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-comp-team05',
+
+      properties: {
+        /**
+         * `fancy` indicates that the element should don a monocle and tophat,
+         * while checking its pocket watch.
+         */
+        fancy: Boolean,
+        
+        events: {
+          type: Array
+        },
+        
+        card: {
+          type: Object
+        },
+
+        /**
+         * Describes the author of the element, but is really just an excuse to
+         * show off JSDoc annotations.
+         *
+         * @type {{name: string, image: string}}
+         */
+        author: {
+          type: Object,
+          // Use `value` to provide a default value for a property, by setting it
+          // on your element's prototype.
+          //
+          // If you provide a function, as we do here, Polymer will call that
+          // _per element instance_.
+          //
+          // We do that to ensure that each element gets its own copy of the
+          // value, rather than having it shared across all instances (via the
+          // prototype).
+          value: function() {
+            return {
+              name:  'Dimitri Glazkov',
+              image: 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg',
+            };
+          }
+        },
+      },
+       _openCalendar: function(){
+          var popCalendar = this.$.schedulePainel;
+          popCalendar.classList.add('scheduled-container-active');
+       },
+       
+       _closeCalendar: function(){
+          var dismisCalendar = this.$.schedulePainel;
+          dismisCalendar.classList.remove('scheduled-container-active');
+       },
+       
+      _cptButtonClass: function () {
+      },
+      
+      _buttonClicked: function() {
+        this.$$('.my-button').name = 'dfsdfsadf';
+      },
+
+      // Element Lifecycle
+
+      ready: function() {
+        // `ready` is called after all elements have been configured, but
+        // propagates bottom-up. This element's children are ready, but parents
+        // are not.
+        //
+        // This is the point where you should make modifications to the DOM (when
+        // necessary), or kick off any processes the element wants to perform.
+      },
+
+      attached: function() {
+        // `attached` fires once the element and its parents have been inserted
+        // into a document.
+        //
+        // This is a good place to perform any work related to your element's
+        // visual state or active behavior (measuring sizes, beginning animations,
+        // loading iconrces, etc).
+      },
+
+      detached: function() {
+        // The analog to `attached`, `detached` fires when the element has been
+        // removed from a document.
+        //
+        // Use this to clean up anything you did in `attached`.
+      },
+
+      // Element Behavior
+
+      /**
+       * Sometimes it's just nice to say hi.
+       *
+       * @param {string} greeting A positive greeting.
+       * @return {string} The full greeting.
+       */
+      sayHello: function(greeting) {
+        var response = greeting || 'Hello World!';
+        return 'my-comp-team05 says, ' + response;
+      },
+
+      /**
+       * The `my-comp-team05-lasers` event is fired whenever `fireLasers` is called.
+       *
+       * @event my-comp-team05-lasers
+       * @detail {{sound: String}}
+       */
+
+      /**
+       * Attempt to destroy this element's enemies with a beam of light!
+       *
+       * Or, at least, dispatch an event in the vain hope that someone else will
+       * do the zapping.
+       */
+      fireLasers: function() {
+        this.fire('my-comp-team05-lasers', {sound: 'Pew pew!'});
+      },
+      
+      _hasResource: function(resourceName){
+        if(this.card && this.card.resource){
+          return this.card.resource.indexOf(resourceName)!== -1;  
+        }
+        return false;
+      }
+    });
+  </script>
+</dom-module>
